@@ -1,0 +1,28 @@
+<div class="container">
+    <table class="table">
+        <tr>
+        <th style="width: 30%">First Name</th>
+        <th style="width: 30%">Last Name</th>
+        <th style="width: 20%">Date of Birth</th>
+        <th style="width: 10%">Gender</th>
+        <th style="width: 15%"></th>
+        <th style="width: 15%"></th>
+        </tr>
+        <tr *ngFor="let client of clients">
+        <td>{{ client.FirstName }}</td>
+        <td>{{ client.LastName }}</td>
+        <td>{{ client.DateOfBirth }}</td>
+        <td>{{ client.Gender }}</td>
+        <td>
+            <button class="btn btn-success">
+            Edit Client
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-success">
+            Remove Client
+            </button>
+        </td>
+        </tr>
+    </table>
+</div>
