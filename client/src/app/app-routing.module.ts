@@ -1,10 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { PacientComponent } from './pacient/pacient.component';
 
-const routes: Routes = [
-  { path: '', component: HomeComponent }
-];
+const routes: Routes = [{ 
+  
+  path: '/', component: HomeComponent,
+    children: [
+    {
+      path: '',
+      component: HomeComponent,
+    },
+    {
+      path: 'edit-pacient/:CNP',
+      component: PacientComponent
+    },
+    {
+      path: 'add-pacient',
+      component: PacientComponent
+    }
+  ]
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

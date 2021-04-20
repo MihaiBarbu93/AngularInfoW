@@ -5,12 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
+import { ClientComponent } from './client/client.component';
+import { PacientComponent } from './pacient/pacient.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    ClientComponent,
+    PacientComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     BrowserModule,
