@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Gender } from '../_models/enums/gender';
+import { Pacient } from '../_models/pacient';
+import { PacientService } from '../_services/pacient.service';
 
 @Component({
   selector: 'app-pacient',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PacientComponent implements OnInit {
 
-  constructor() { }
+  constructor(private pacientService: PacientService) { }
 
   ngOnInit(): void {
+
   }
 
+  add(patientFromForm: Pacient): void {
+    this.pacientService.addPacient(patientFromForm)
+    .subscribe();
+  }
+  
 }

@@ -5,12 +5,8 @@ import { PacientComponent } from './pacient/pacient.component';
 
 const routes: Routes = [{ 
   
-  path: '/', component: HomeComponent,
+  path: '', component: HomeComponent,
     children: [
-    {
-      path: '',
-      component: HomeComponent,
-    },
     {
       path: 'edit-pacient/:CNP',
       component: PacientComponent

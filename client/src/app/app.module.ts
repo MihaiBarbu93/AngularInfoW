@@ -5,25 +5,29 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
-import { ClientComponent } from './client/client.component';
 import { PacientComponent } from './pacient/pacient.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from '../app/_services/in-memory-data.service'
+import { FormsModule } from '@angular/forms';
+import { PacientService } from './_services/pacient.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     HomeComponent,
-    ClientComponent,
     PacientComponent,
     ConfirmationModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService)
   ],
-  providers: [],
+  providers: [PacientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

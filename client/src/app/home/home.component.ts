@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Client } from '../_models/client';
-import { ClientService } from '../_services/client.service';
+import { Pacient } from '../_models/pacient';
+import { PacientService } from '../_services/pacient.service';
 
 @Component({
   selector: 'app-home',
@@ -10,14 +10,22 @@ import { ClientService } from '../_services/client.service';
 })
 export class HomeComponent implements OnInit {
 
-  clients: Client[] = [];
+  pacients: Pacient[] = [];
 
-  constructor(private clientService: ClientService) { }
+  constructor(private pacientService: PacientService) { }
 
   ngOnInit(): void {
-    this.clientService.getClients().subscribe((clients) => {
-      this.clients = clients;
+    this.getPacients();
+  }
+
+  getPacients(){
+    this.pacientService.getPacients().subscribe((pacinets) => {
+      this.pacients = pacinets;
     });
+  }
+  delete(pacient: Pacient): void {
+    this.pacients = this.pacients.filter(p => p !== pacient );
+    this.pacientService.deletePacient(pacient.Id).subscribe();
   }
 
 

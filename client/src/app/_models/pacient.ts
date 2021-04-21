@@ -1,6 +1,7 @@
 import { Gender } from "./enums/gender";
 
-export interface Client {
+export interface Pacient {
+    Id:number,
     FirstName: string;
     LastName: string;
     DateOfBirth: Date;

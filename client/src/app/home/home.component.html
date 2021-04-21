@@ -8,19 +8,19 @@
         <th style="width: 15%"></th>
         <th style="width: 15%"></th>
         </tr>
-        <tr *ngFor="let client of clients">
-        <td>{{ client.FirstName }}</td>
-        <td>{{ client.LastName }}</td>
-        <td>{{ client.DateOfBirth }}</td>
-        <td>{{ client.Gender }}</td>
+        <tr *ngFor="let pacient of pacients">
+        <td>{{ pacient.FirstName }}</td>
+        <td>{{ pacient.LastName }}</td>
+        <td>{{ pacient.DateOfBirth }}</td>
+        <td>{{ pacient.Gender }}</td>
         <td>
             <button class="btn btn-success">
-            Edit Client
+            Edit Pacient
             </button>
         </td>
         <td>
             <button class="btn btn-success">
-            Remove Client
+            Remove Pacient
             </button>
         </td>
         </tr>
