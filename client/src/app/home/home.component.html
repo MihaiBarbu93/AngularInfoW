@@ -1,28 +1,49 @@
 <div class="container">
-    <table class="table">
-        <tr>
-        <th style="width: 30%">First Name</th>
-        <th style="width: 30%">Last Name</th>
-        <th style="width: 20%">Date of Birth</th>
-        <th style="width: 10%">Gender</th>
-        <th style="width: 15%"></th>
-        <th style="width: 15%"></th>
-        </tr>
-        <tr *ngFor="let pacient of pacients">
-        <td>{{ pacient.FirstName }}</td>
-        <td>{{ pacient.LastName }}</td>
-        <td>{{ pacient.DateOfBirth }}</td>
-        <td>{{ pacient.Gender }}</td>
-        <td>
-            <button class="btn btn-success">
-            Edit Pacient
-            </button>
-        </td>
-        <td>
-            <button class="btn btn-success">
-            Remove Pacient
-            </button>
-        </td>
-        </tr>
-    </table>
+  
+
+  <a class="nav-link" href="javascript:void(0);" (click)="openAddPatientModal(patientTemplate)">Add Patient <span class="sr-only">(current)</span></a>
+     
+      
+  
+  
+  <table class="table">
+    <tr>
+      <th style="width: 30%">First Name</th>
+      <th style="width: 30%">Last Name</th>
+      <th style="width: 20%">Date of Birth</th>
+      <th style="width: 10%">Gender</th>
+      <th style="width: 15%"></th>
+      <th style="width: 15%"></th>
+    </tr>
+    <tr *ngFor="let patient of patients">
+      <td>{{ patient.FirstName }}</td>
+      <td>{{ patient.LastName }}</td>
+      <td>{{ patient.DateOfBirth | date:'MMM d, y'}}</td>
+      <td>{{ patient.Gender }}</td>
+      <td>
+        <button class="btn btn-success">Edit Patient</button>
+      </td>
+      <td>
+        <button class="btn btn-success">Remove Patient</button>
+      </td>
+    </tr>
+  </table>
+  <ng-template #patientTemplate>
+    <div class="modal-header register-login-modal-header">
+      <button
+        type="button"
+        class="close pull-right"
+        aria-label="Close"
+        (click)="modalRef.hide()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-patient
+        [modalRefFromHomeComponent]="modalRef"
+        [patientsFromHomeComponent]="patients"
+      ></app-patient>
+    </div>
+  </ng-template>
 </div>

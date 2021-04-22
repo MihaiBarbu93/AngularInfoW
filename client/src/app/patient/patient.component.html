@@ -1,0 +1,135 @@
+<form
+  [formGroup]="patientForm"
+  (ngSubmit)="add()"
+  autocomplete="off"
+  novalidate
+>
+  <p class="text-center signup-register-header mb-4">Register Patient</p>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      name="firstName"
+      formControlName="firstName"
+      [(ngModel)]="newPatient.FirstName"
+      placeholder="First name"
+    />
+    <div *ngIf="f.firstName.touched && f.firstName.invalid" class="text-danger">
+      <div class="pt-2" *ngIf="f.firstName.errors.required">
+        <p class="error">First name is require</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      name="lastName"
+      formControlName="lastName"
+      [(ngModel)]="newPatient.LastName"
+      placeholder="Last name"
+    />
+    <!-- <span
+      class="help-block"
+      *ngIf="
+        registerForm.get('firstName').invalid &&
+        registerForm.get('firstName').touched
+      "
+    >
+      First name is require
+    </span> -->
+    <div *ngIf="f.lastName.touched && f.lastName.invalid" class="text-danger">
+      <div class="pt-2" *ngIf="f.lastName.errors.required">
+        <p class="error">Last name is required</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      placeholder="Date of birth"
+      class="form-control"
+      name="dateOfBirth"
+      bsDatepicker
+      formControlName="dateOfBirth"
+      [(ngModel)]="newPatient.DateOfBirth"
+    />
+    <div *ngIf="f.dateOfBirth.touched && f.dateOfBirth.invalid" class="text-danger">
+        <div class="pt-2" *ngIf="f.dateOfBirth.errors.required">
+          <p class="error">Birth date is required</p>
+        </div>
+    </div>
+  </div>
+  <div class="form-group form-selects">
+    <ngx-select-dropdown
+      id="gender"
+      [multiple]="false"
+      [(ngModel)]="newPatient.Gender"
+      [config]="configGenderType"
+      [options]="genderTypes"
+      formControlName="gender"
+      name="gender"
+
+    ></ngx-select-dropdown>
+    <div *ngIf="f.gender.touched && f.gender.invalid" class="text-danger">
+        <div class="pt-2" *ngIf="f.gender.errors.required">
+          <p class="error">Gender is required</p>
+        </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      name="CNP"
+      formControlName="CNP"
+      [(ngModel)]="newPatient.CNP"
+      placeholder="CNP"
+    />
+    <div *ngIf="f.CNP.touched && f.CNP.invalid" class="text-danger">
+      <div class="pt-2" *ngIf="f.CNP.errors.minlength || f.CNP.errors.maxlength || f.CNP.errors.pattern">
+        <p class="error">CNP must contain 13 numeric characters</p>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      name="phoneNumber"
+      formControlName="phoneNumber"
+      [(ngModel)]="newPatient.PhoneNumber"
+      placeholder="Phone"
+    />
+    <div *ngIf="f.phoneNumber.touched && f.phoneNumber.invalid" class="text-danger">
+      <div class="pt-2" *ngIf="f.phoneNumber.errors.pattern">
+        <p class="error">You must add numeric characters</p>
+      </div>
+    </div> 
+  </div>
+  <div class="form-group">
+    <input
+      type="number"
+      class="form-control"
+      name="orderNr"
+      formControlName="orderNr"
+      [(ngModel)]="newPatient.OrderNr"
+      placeholder="OrderNr"
+      disabled
+    />
+    <!-- <div *ngIf="f.CNP.touched && f.CNP.invalid" class="text-danger">
+      <div class="pt-2" *ngIf="f.CNP.errors.minlength || f.CNP.errors.maxlength">
+        <p class="error">CNP must contain 13 numeric characters</p>
+      </div>
+    </div> -->
+  </div>
+  <div class="form-group text-center">
+    <button
+      [disabled]="!patientForm.valid"
+      class="btn btn-success mr-2 register-login-button"
+      type="submit"
+    >
+      Add
+    </button>
+  </div>
+</form>

@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Pacient } from '../_models/pacient';
-import { PacientService } from '../_services/pacient.service';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Patient } from '../_models/patient';
+import { PatientService } from '../_services/patient.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { PatientComponent } from '../patient/patient.component';
+import { Gender } from '../_models/enums/gender';
 
 @Component({
   selector: 'app-home',
@@ -9,24 +11,32 @@ import { PacientService } from '../_services/pacient.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  modalRef!: BsModalRef;
+  config = {
+    keyboard: true,
+  };
+  patients: Patient[] = [];
 
-  pacients: Pacient[] = [];
-
-  constructor(private pacientService: PacientService) { }
+  constructor(private patientService: PatientService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.getPacients();
+    this.getPatients();
   }
 
-  getPacients(){
-    this.pacientService.getPacients().subscribe((pacinets) => {
-      this.pacients = pacinets;
+  getPatients(){
+    this.patientService.getPatients().subscribe((pacinets) => {
+      this.patients = pacinets;
     });
   }
-  delete(pacient: Pacient): void {
-    this.pacients = this.pacients.filter(p => p !== pacient );
-    this.pacientService.deletePacient(pacient.Id).subscribe();
+  delete(patient: Patient): void {
+    this.patients = this.patients.filter(p => p !== patient );
+    this.patientService.deletePatient(patient.OrderNr).subscribe();
   }
+
+  openAddPatientModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, this.config);
+  }
+
 
 
 
