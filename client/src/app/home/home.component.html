@@ -1,7 +1,7 @@
 <div class="container">
   
 
-  <a class="nav-link" href="javascript:void(0);" (click)="openAddPatientModal(patientTemplate)">Add Patient <span class="sr-only">(current)</span></a>
+  <a class="nav-link" href="javascript:void(0);" (click)="open(content)">Add Patient <span class="sr-only">(current)</span></a>
      
       
   
@@ -16,20 +16,21 @@
       <th style="width: 15%"></th>
     </tr>
     <tr *ngFor="let patient of patients">
-      <td>{{ patient.FirstName }}</td>
-      <td>{{ patient.LastName }}</td>
-      <td>{{ patient.DateOfBirth | date:'MMM d, y'}}</td>
-      <td>{{ patient.Gender }}</td>
+      <td>{{ patient.firstName }}</td>
+      <td>{{ patient.lastName }}</td>
+      <td>{{ patient.dateOfBirth | date:'MMM d, y'}}</td>
+      <td>{{ patient.gender }}</td>
       <td>
-        <button class="btn btn-success">Edit Patient</button>
+        <button (click)="open(content, patient.id)" class="btn btn-success">Edit Patient</button>
       </td>
       <td>
-        <button class="btn btn-success">Remove Patient</button>
+        <button (click)="delete(patient)" class="btn btn-success">Remove Patient</button>
       </td>
     </tr>
   </table>
-  <ng-template #patientTemplate>
-    <div class="modal-header register-login-modal-header">
+  <!-- <ng-template #patientTemplate>
+    <div class="modal " bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+    tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
       <button
         type="button"
         class="close pull-right"
@@ -43,7 +44,23 @@
       <app-patient
         [modalRefFromHomeComponent]="modalRef"
         [patientsFromHomeComponent]="patients"
+        [idFromHome]="ordrNr"
       ></app-patient>
     </div>
-  </ng-template>
+  </ng-template> -->
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-patient
+        [modalRefFromHomeComponent]="mService"
+        [patientsFromHomeComponent]="patients"
+        [idFromHome]="ordrNr"
+        [isAddMode]="isAddMode"
+      ></app-patient>
+  </div>
+</ng-template>

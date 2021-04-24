@@ -1,11 +1,11 @@
 import { Gender } from "./enums/gender";
 
 export interface Patient {
-    OrderNr:number,
-    FirstName: string;
-    LastName: string;
-    DateOfBirth: Date;
-    Gender: string;
-    CNP: number;
-    PhoneNumber: number;
+    id:number,
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    gender: string;
+    ssn: number;
+    phoneNumber: number;
   }

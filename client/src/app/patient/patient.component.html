@@ -1,17 +1,20 @@
 <form
   [formGroup]="patientForm"
-  (ngSubmit)="add()"
+  (ngSubmit)="onSubmit()"
   autocomplete="off"
   novalidate
 >
-  <p class="text-center signup-register-header mb-4">Register Patient</p>
+  <p *ngIf="isAddMode" class="text-center signup-register-header mb-4">Register Patient</p>
+  
+  <p *ngIf="!isAddMode" class="text-center signup-register-header mb-4">Edit Patient</p>
+
   <div class="form-group">
     <input
       type="text"
       class="form-control"
       name="firstName"
       formControlName="firstName"
-      [(ngModel)]="newPatient.FirstName"
+      [(ngModel)]="newPatient.firstName"
       placeholder="First name"
     />
     <div *ngIf="f.firstName.touched && f.firstName.invalid" class="text-danger">
@@ -26,7 +29,7 @@
       class="form-control"
       name="lastName"
       formControlName="lastName"
-      [(ngModel)]="newPatient.LastName"
+      [(ngModel)]="newPatient.lastName"
       placeholder="Last name"
     />
     <!-- <span
@@ -52,7 +55,7 @@
       name="dateOfBirth"
       bsDatepicker
       formControlName="dateOfBirth"
-      [(ngModel)]="newPatient.DateOfBirth"
+      [(ngModel)]="newPatient.dateOfBirth"
     />
     <div *ngIf="f.dateOfBirth.touched && f.dateOfBirth.invalid" class="text-danger">
         <div class="pt-2" *ngIf="f.dateOfBirth.errors.required">
@@ -64,14 +67,13 @@
     <ngx-select-dropdown
       id="gender"
       [multiple]="false"
-      [(ngModel)]="newPatient.Gender"
-      [config]="configGenderType"
+      [(ngModel)]="newPatient.gender"
       [options]="genderTypes"
       formControlName="gender"
       name="gender"
 
     ></ngx-select-dropdown>
-    <div *ngIf="f.gender.touched && f.gender.invalid" class="text-danger">
+    <div *ngIf="f.submitted && f.gender.invalid" class="text-danger">
         <div class="pt-2" *ngIf="f.gender.errors.required">
           <p class="error">Gender is required</p>
         </div>
@@ -81,14 +83,14 @@
     <input
       type="text"
       class="form-control"
-      name="CNP"
-      formControlName="CNP"
-      [(ngModel)]="newPatient.CNP"
-      placeholder="CNP"
+      name="ssn"
+      formControlName="ssn"
+      [(ngModel)]="newPatient.ssn"
+      placeholder="ssn"
     />
-    <div *ngIf="f.CNP.touched && f.CNP.invalid" class="text-danger">
-      <div class="pt-2" *ngIf="f.CNP.errors.minlength || f.CNP.errors.maxlength || f.CNP.errors.pattern">
-        <p class="error">CNP must contain 13 numeric characters</p>
+    <div *ngIf="f.ssn.touched && f.ssn.invalid" class="text-danger">
+      <div class="pt-2" *ngIf="f.ssn.errors.minlength || f.ssn.errors.maxlength || f.ssn.errors.pattern">
+        <p class="error">ssn must contain 13 numeric characters</p>
       </div>
     </div>
   </div>
@@ -98,7 +100,7 @@
       class="form-control"
       name="phoneNumber"
       formControlName="phoneNumber"
-      [(ngModel)]="newPatient.PhoneNumber"
+      [(ngModel)]="newPatient.phoneNumber"
       placeholder="Phone"
     />
     <div *ngIf="f.phoneNumber.touched && f.phoneNumber.invalid" class="text-danger">
@@ -111,25 +113,32 @@
     <input
       type="number"
       class="form-control"
-      name="orderNr"
-      formControlName="orderNr"
-      [(ngModel)]="newPatient.OrderNr"
+      name="id"
+      formControlName="id"
+      [(ngModel)]="newPatient.id"
       placeholder="OrderNr"
-      disabled
+
     />
-    <!-- <div *ngIf="f.CNP.touched && f.CNP.invalid" class="text-danger">
-      <div class="pt-2" *ngIf="f.CNP.errors.minlength || f.CNP.errors.maxlength">
-        <p class="error">CNP must contain 13 numeric characters</p>
+    <!-- <div *ngIf="f.ssn.touched && f.ssn.invalid" class="text-danger">
+      <div class="pt-2" *ngIf="f.ssn.errors.minlength || f.ssn.errors.maxlength">
+        <p class="error">ssn must contain 13 numeric characters</p>
       </div>
     </div> -->
   </div>
   <div class="form-group text-center">
-    <button
+    <button *ngIf="isAddMode"
       [disabled]="!patientForm.valid"
       class="btn btn-success mr-2 register-login-button"
       type="submit"
     >
       Add
+    </button>
+    <button *ngIf="!isAddMode"
+      [disabled]="!patientForm.valid"
+      class="btn btn-success mr-2 register-login-button"
+      type="submit"
+    >
+      Save
     </button>
   </div>
 </form>

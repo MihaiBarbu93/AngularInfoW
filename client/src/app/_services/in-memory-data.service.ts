@@ -8,97 +8,99 @@ import { Patient } from '../_models/patient';
 })
 export class InMemoryDataService implements InMemoryDbService{
   createDb() {
-    let patients: Patient[] = [
+    const patients = [
       {
-        "OrderNr": 1,
-        "FirstName": "Della",
-        "LastName": "Sweet",
-        "DateOfBirth": new Date("2003-03-28"),
-        "Gender": Gender[0],
-        "CNP": 2123456789098,
-        "PhoneNumber": 9954802602
+        id: 1,
+        firstName: "Della",
+        lastName: "Sweet",
+        dateOfBirth: new Date("2003-03-28"),
+        gender: "M",
+        ssn : 2123456789098,
+        phoneNumber: 9954802602
       },
       {
-        "OrderNr": 2,
-        "FirstName": "Cassandra",
-        "LastName": "Castillo",
-        "DateOfBirth": new Date("1970-12-25"),
-        "Gender": Gender[0],
-        "CNP": 1098767854321,
-        "PhoneNumber": 8035842781
+        id: 2,
+        firstName: "Cassandra",
+        lastName: "Castillo",
+        dateOfBirth: new Date("1970-12-25"),
+        gender: "M",
+        ssn: 1098767854321,
+        phoneNumber: 8035842781
       },
       {
-        "OrderNr": 3,
-        "FirstName": "Maura",
-        "LastName": "Wells",
-        "DateOfBirth": new Date("1978-09-05"),
-        "Gender": Gender[1],
-        "CNP": 2456789054367,
-        "PhoneNumber": 8584643734
+        id: 3,
+        firstName: "Maura",
+        lastName: "Wells",
+        dateOfBirth: new Date("1978-09-05"),
+        gender: "F",
+        ssn: 2456789054367,
+        phoneNumber: 8584643734
       },
       {
-        "OrderNr": 4,
-        "FirstName": "Trina",
-        "LastName": "Gaines",
-        "DateOfBirth": new Date("1984-07-23"),
-        "Gender": Gender[1],
-        "CNP": 1876432345678,
-        "PhoneNumber": 8784423884
+        id: 4,
+        firstName: "Trina",
+        lastName: "Gaines",
+        dateOfBirth: new Date("1984-07-23"),
+        gender: "F",
+        ssn: 1876432345678,
+        phoneNumber: 8784423884
       },
       {
-        "OrderNr": 5,
-        "FirstName": "Curry",
-        "LastName": "Henson",
-        "DateOfBirth": new Date("1979-05-28"),
-        "Gender": Gender[1],
-        "CNP": 2345678904531,
-        "PhoneNumber": 9024962374
+        id: 5,
+        firstName: "Curry",
+        lastName: "Henson",
+        dateOfBirth: new Date("1979-05-28"),
+        gender: "F",
+        ssn: 2345678904531,
+        phoneNumber: 9024962374
       },
       {
-        "OrderNr": 6,
-        "FirstName": "Justine",
-        "LastName": "Norton",
-        "DateOfBirth": new Date("1971-09-07"),
-        "Gender": Gender[1],
-        "CNP": 2345643454210,
-        "PhoneNumber": 9734282402
+        id: 6,
+        firstName: "Justine",
+        lastName: "Norton",
+        dateOfBirth: new Date("1971-09-07"),
+        gender: "F",
+        ssn: 2345643454210,
+        phoneNumber: 9734282402
       },
       {
-        "OrderNr": 7,
-        "FirstName": "Hammond",
-        "LastName": "Curry",
-        "DateOfBirth": new Date("2004-09-16"),
-        "Gender": Gender[0],
-        "CNP": 2345678903451,
-        "PhoneNumber": 8934143540
+        id: 7,
+        firstName: "Hammond",
+        lastName: "Curry",
+        dateOfBirth: new Date("2004-09-16"),
+        gender: "M",
+        ssn: 2345678903451,
+        phoneNumber: 8934143540
       },
       {
-        "OrderNr": 8,
-        "FirstName": "Agnes",
-        "LastName": "Vang",
-        "DateOfBirth": new Date("1953-11-26"),
-        "Gender": Gender[0],
-        "CNP": 1456342178906,
-        "PhoneNumber": 9944342312
+        id: 8,
+        firstName: "Agnes",
+        lastName: "Vang",
+        dateOfBirth: new Date("1953-11-26"),
+        gender: "M",
+        ssn: 1456342178906,
+        phoneNumber: 9944342312
       },
       {
-        "OrderNr": 9,
-        "FirstName": "Wall",
-        "LastName": "Saunders",
-        "DateOfBirth": new Date("2000-09-13"),
-        "Gender": Gender[0],
-        "CNP": 1456783423570,
-        "PhoneNumber": 8135762297
+        id: 9,
+        firstName: "Wall",
+        lastName: "Saunders",
+        dateOfBirth: new Date("2000-09-13"),
+        gender: "M",
+        ssn: 1456783423570,
+        phoneNumber: 8135762297
       },
       {
-        "OrderNr": 10,
-        "FirstName": "Parker",
-        "LastName": "Butler",
-        "DateOfBirth": new Date("1976-02-16"),
-        "Gender": Gender[0],
-        "CNP": 1456321234567,
-        "PhoneNumber": 9994022844
-      }
+        id: 10,
+        firstName: "Parker",
+        lastName: "Butler",
+        dateOfBirth: new Date("1976-02-16"),
+        gender: "M",
+        ssn: 1456321234567,
+        phoneNumber: 9994022844
+      },
+    
+
     ];
 
     return {
@@ -106,8 +108,8 @@ export class InMemoryDataService implements InMemoryDbService{
     };
    }
 
-   genId(patients: Patient[]): number {
-    return patients.length > 0 ? Math.max(...patients.map(p => p.OrderNr)) + 1 : 1;
+   genid(patients: Patient[]): number {
+    return patients.length > 0 ? Math.max(...patients.map(p => p.id)) + 1 : 1;
   }
     
   }

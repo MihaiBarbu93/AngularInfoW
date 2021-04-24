@@ -8,7 +8,7 @@ const routes: Routes = [{
   path: '', component: HomeComponent,
     children: [
     {
-      path: 'edit-patient/:CNP',
+      path: 'edit-patient/:OrderNr',
       component: PatientComponent
     },
     {

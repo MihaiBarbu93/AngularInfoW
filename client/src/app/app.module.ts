@@ -13,8 +13,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientService } from './_services/patient.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NgbModal, NgbModalConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -33,11 +37,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SelectDropDownModule,
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
-    InMemoryWebApiModule.forRoot(InMemoryDataService)
+    InMemoryWebApiModule.forRoot(InMemoryDataService, {post204: false, put204: false}),
+    MatButtonModule,
+    MatDialogModule,
+    ModalModule.forRoot(),
+    NgbModule,
   ],
   providers: [
     BsModalService,
     PatientService,
+    NgbModalConfig, 
+    NgbModal
   ],
   bootstrap: [AppComponent]
 })
