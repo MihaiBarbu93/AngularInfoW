@@ -8,7 +8,7 @@ import { Patient } from '../_models/patient';
 })
 export class InMemoryDataService implements InMemoryDbService{
   createDb() {
-    const patients = [
+    let patients = [
       {
         id: 1,
         firstName: "Della",

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Patient } from '../_models/patient';
+
+
 
 @Component({
   selector: 'app-confirmation-modal',
@@ -6,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./confirmation-modal.component.css']
 })
 export class ConfirmationModalComponent implements OnInit {
+ 
+  public dialogRef: MatDialogRef<ConfirmationModalComponent>;
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Patient) { }
 
   ngOnInit(): void {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

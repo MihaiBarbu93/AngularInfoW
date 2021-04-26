@@ -1,7 +1,7 @@
 <div class="container">
   
 
-  <a class="nav-link" href="javascript:void(0);" (click)="open(content)">Add Patient <span class="sr-only">(current)</span></a>
+  <a class="nav-link" href="javascript:void(0);" (click)="open(addedit)">Add Patient <span class="sr-only">(current)</span></a>
      
       
   
@@ -21,35 +21,15 @@
       <td>{{ patient.dateOfBirth | date:'MMM d, y'}}</td>
       <td>{{ patient.gender }}</td>
       <td>
-        <button (click)="open(content, patient.id)" class="btn btn-success">Edit Patient</button>
+        <button (click)="open(addedit, patient.id)" class="btn btn-success">Edit Patient</button>
       </td>
       <td>
-        <button (click)="delete(patient)" class="btn btn-success">Remove Patient</button>
+        <button (click)="openRemoveDialog(patient)" class="btn btn-success">Remove Patient</button>
       </td>
     </tr>
   </table>
-  <!-- <ng-template #patientTemplate>
-    <div class="modal " bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
-    tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
-      <button
-        type="button"
-        class="close pull-right"
-        aria-label="Close"
-        (click)="modalRef.hide()"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <app-patient
-        [modalRefFromHomeComponent]="modalRef"
-        [patientsFromHomeComponent]="patients"
-        [idFromHome]="ordrNr"
-      ></app-patient>
-    </div>
-  </ng-template> -->
 </div>
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #addedit>
   <div class="modal-header">
     <button type="button" class="close" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>

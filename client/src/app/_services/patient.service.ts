@@ -1,15 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { Patient } from '../_models/patient';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
-
   private patientsUrl: string = 'api/patients'; 
+  patient: ConfirmationModalComponent;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -19,9 +20,8 @@ export class PatientService {
   
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+
+      console.error(error); 
   
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
@@ -53,7 +53,7 @@ export class PatientService {
 
   deletePatient(id: number): Observable<Patient> {
     const url = `${this.patientsUrl}/${id}`;
-  
     return this.http.delete<Patient>(url, this.httpOptions);
+    
   }
 }
