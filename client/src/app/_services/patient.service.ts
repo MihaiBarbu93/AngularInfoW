@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 import { Patient } from '../_models/patient';
 
@@ -31,29 +31,29 @@ export class PatientService {
     };
   }
 
-  getPatients(): Observable<Patient[]>{
-    return this.http.get<Patient[]>(this.patientsUrl);
+  async getPatients(): Promise<Patient[]>{
+    let data = await this.http.get<Patient[]>(this.patientsUrl).toPromise();
+    return data;
   }
 
-  getPatient(id: number): Observable<Patient> {
+  async getPatient(id: number): Promise<Patient> {
     const url = `${this.patientsUrl}/${id}`;
-    return this.http.get<Patient>(url).pipe();
+    return await this.http.get<Patient>(url).toPromise();
   }
 
-  addPatient(patient: Patient): Observable<Patient> {
-    return this.http.post<Patient>(this.patientsUrl, patient, this.httpOptions);
+  async addPatient(patient: Patient): Promise<Patient> {
+    return await this.http.post<Patient>(this.patientsUrl, patient, this.httpOptions).toPromise();
   }
 
-  updatePatient(patient: Patient): Observable<any> {
+  async updatePatient(patient: Patient): Promise<Patient> {
     return this.http.put<Patient>(this.patientsUrl, patient, this.httpOptions).pipe(
-      tap(_ => console.log(`updated patient id=${patient.id}`)),
       catchError(this.handleError<any>('updatePatient'))
-    );
+    ).toPromise();
   }
 
-  deletePatient(id: number): Observable<Patient> {
+  async deletePatient(id: number): Promise<Patient> {
     const url = `${this.patientsUrl}/${id}`;
-    return this.http.delete<Patient>(url, this.httpOptions);
+    return await this.http.delete<Patient>(url, this.httpOptions).toPromise();
     
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Gender } from '../_models/enums/gender';
 import { Patient } from '../_models/patient';
 
 @Injectable({
@@ -106,10 +105,10 @@ export class InMemoryDataService implements InMemoryDbService{
     return {
      patients: patients
     };
-   }
+  }
 
-   genid(patients: Patient[]): number {
+  genid(patients: Patient[]): number {
     return patients.length > 0 ? Math.max(...patients.map(p => p.id)) + 1 : 1;
   }
     
-  }
+}

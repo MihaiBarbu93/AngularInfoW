@@ -1,13 +1,11 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Gender } from '../_models/enums/gender';
 import { Patient } from '../_models/patient';
 import { PatientService } from '../_services/patient.service';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { first, tap } from 'rxjs/operators';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-patient',
@@ -15,7 +13,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent implements OnInit {
-
   @Input() modalRefFromHomeComponent: any;
   @Input() patientsFromHomeComponent:any;
   @Input() idFromHome: any;
@@ -25,12 +22,11 @@ export class PatientComponent implements OnInit {
   genderTypes: string[] = [];
 
 
-  constructor(private patientService: PatientService, private _location: Location, private route: ActivatedRoute) {
+  constructor(private patientService: PatientService) {
  
     }
 
   ngOnInit(): void {
-    console.log("order nr: ", this.idFromHome);
     this.isAddMode = !this.idFromHome;
     this.getGenderTypes();
     
@@ -61,10 +57,9 @@ export class PatientComponent implements OnInit {
 
     if (!this.isAddMode) {
       this.patientService.getPatient(this.idFromHome)
-          .pipe(first())
-          .subscribe(p => this.newPatient={
+          .then(p => this.newPatient={
             ...p, dateOfBirth: new Date(p.dateOfBirth)
-          });
+          })
     }else{
       this.newPatient.id =this.genId(this.patientsFromHomeComponent);
     }
@@ -93,40 +88,40 @@ export class PatientComponent implements OnInit {
     } else {
       this.updatePatient();
     }
-    
-    this.newPatient = <Patient>{};
   }
 
 
   add(): void {
     this.patientService.addPatient(this.newPatient)
-    .subscribe(
+    .then(
       (p) => {
         this.patientsFromHomeComponent.push(p);
+        this.modalRefFromHomeComponent.dismissAll();
+        this.resetForm(false);
       },
       (error) => {
         console.log(error);
       }
     );
-    this.modalRefFromHomeComponent.dismissAll(),
-    this.resetForm();
+    
   }
  
 
   updatePatient(): void {
     this.patientService.updatePatient(this.newPatient)
-      .subscribe((p)=>{
+      .then((p)=>{
         let patientIndex = this.patientsFromHomeComponent.findIndex(patient => patient.id == p.id);
         this.patientsFromHomeComponent[patientIndex] = p;
+        this.modalRefFromHomeComponent.dismissAll();
+        this.resetForm(true);
       });
-      this.modalRefFromHomeComponent.dismissAll();
-      this.resetForm();  
+        
   }
 
-  resetForm(){
+  resetForm(isAdd: boolean){
     this.newPatient = <Patient>{};
     this.idFromHome  = null;
-    this.isAddMode = null;
+    this.isAddMode = isAdd;
     this.patientForm.reset();
   }
   
