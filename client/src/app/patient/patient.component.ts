@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Gender } from '../_models/enums/gender';
 import { Patient } from '../_models/patient';
 import { PatientService } from '../_services/patient.service';
@@ -20,16 +20,80 @@ export class PatientComponent implements OnInit {
   newPatient: Patient = <Patient>{};
   patientForm: FormGroup;
   genderTypes: string[] = [];
+  today = new Date();
+  @Output() saveEvent = new EventEmitter<boolean>();
 
-
-  constructor(private patientService: PatientService) {
- 
-    }
+  constructor(private patientService: PatientService) {}
 
   ngOnInit(): void {
-    this.isAddMode = !this.idFromHome;
+    this.setTodayDate();
     this.getGenderTypes();
+    this.setPatientForm();
     
+    if (!this.isAddMode) {
+      this.patientService.getPatient(this.idFromHome)
+          .then(p => this.newPatient={
+            ...p, dateOfBirth: new Date(p.dateOfBirth)
+          })
+    }else{
+      this.newPatient.id =this.genId(this.patientsFromHomeComponent);
+    }
+  }
+
+  setTodayDate(){
+    let dd = String(this.today.getDate()).padStart(2, '0');
+    let mm = String(this.today.getMonth() + 1).padStart(2, '0');
+    let yyyy = this.today.getFullYear();
+    this.today = new Date(mm + '/' + dd + '/' + yyyy);
+  }
+
+  getGenderTypes() {
+    for (var n in Gender) {
+      if (typeof Gender[n] === 'number') this.genderTypes.push(n);
+    }
+  }
+  genId(patients: Patient[]): number {
+    return patients.length > 0 ? Math.max(...patients.map(patient => patient.id)) + 1 : 11;
+  }
+
+  get f() {
+    return this.patientForm.controls;
+  }
+
+  onSubmit(value: boolean){
+    if (this.isAddMode) {
+      this.add();
+    } else {
+      this.updatePatient();
+    }
+    this.saveEvent.emit(value)
+  }
+
+  add(): void {
+    this.patientService.addPatient(this.newPatient)
+    .then(
+      (p) => {
+        this.patientsFromHomeComponent.push(p);
+        this.resetForm(false);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    
+  }
+ 
+  updatePatient(): void {
+    this.patientService.updatePatient(this.newPatient)
+      .then((p)=>{
+        let patientIndex = this.patientsFromHomeComponent.findIndex(patient => patient.id == p.id);
+        this.patientsFromHomeComponent[patientIndex] = p;
+        this.resetForm(true);
+      });
+        
+  }
+
+  setPatientForm(){
     this.patientForm = new FormGroup({
       id: new FormControl({value: null, disabled:true}),
       firstName: new FormControl('', [
@@ -54,68 +118,6 @@ export class PatientComponent implements OnInit {
         Validators.pattern("^[0-9]*$")
       ])
     });
-
-    if (!this.isAddMode) {
-      this.patientService.getPatient(this.idFromHome)
-          .then(p => this.newPatient={
-            ...p, dateOfBirth: new Date(p.dateOfBirth)
-          })
-    }else{
-      this.newPatient.id =this.genId(this.patientsFromHomeComponent);
-    }
-  }
-
-
-
-  getGenderTypes() {
-    for (var n in Gender) {
-      if (typeof Gender[n] === 'number') this.genderTypes.push(n);
-    }
-  }
-  genId(patients: Patient[]): number {
-    return patients.length > 0 ? Math.max(...patients.map(patient => patient.id)) + 1 : 11;
-  }
-
- 
-
-  get f() {
-    return this.patientForm.controls;
-  }
-
-  onSubmit(){
-    if (this.isAddMode) {
-      this.add();
-    } else {
-      this.updatePatient();
-    }
-  }
-
-
-  add(): void {
-    this.patientService.addPatient(this.newPatient)
-    .then(
-      (p) => {
-        this.patientsFromHomeComponent.push(p);
-        this.modalRefFromHomeComponent.dismissAll();
-        this.resetForm(false);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-    
-  }
- 
-
-  updatePatient(): void {
-    this.patientService.updatePatient(this.newPatient)
-      .then((p)=>{
-        let patientIndex = this.patientsFromHomeComponent.findIndex(patient => patient.id == p.id);
-        this.patientsFromHomeComponent[patientIndex] = p;
-        this.modalRefFromHomeComponent.dismissAll();
-        this.resetForm(true);
-      });
-        
   }
 
   resetForm(isAdd: boolean){
@@ -123,6 +125,7 @@ export class PatientComponent implements OnInit {
     this.idFromHome  = null;
     this.isAddMode = isAdd;
     this.patientForm.reset();
+    this.modalRefFromHomeComponent.dismissAll();
   }
   
 }

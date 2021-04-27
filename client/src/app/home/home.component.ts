@@ -30,10 +30,15 @@ export class HomeComponent implements OnInit {
   }
 
   getPatients(){
-    this.patientService.getPatients().then(p=>this.patients=p);
+    this.patientService.getPatients().then(p => this.patients = p);
   }
   
-  
+  onSubmitEvent(val: boolean){
+    if(val){
+      this.ordrNr=null;
+    }
+  }
+
   open(content: TemplateRef<any>, id?:number) {
     if(id) {
       this.ordrNr=id;
@@ -61,7 +66,7 @@ export class HomeComponent implements OnInit {
   }
 
   delete(patient: Patient): void {
-    this.patients = this.patients.filter(p => p !== patient );
+    this.patients = this.patients.filter(p => p !== patient);
     this.patientService.deletePatient(patient.id).then();
   }
   

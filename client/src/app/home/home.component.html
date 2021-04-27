@@ -35,6 +35,7 @@
         [patientsFromHomeComponent]="patients"
         [idFromHome]="ordrNr"
         [isAddMode]="isAddMode"
+        (saveEvent)="onSubmitEvent($event)"
       ></app-patient>
   </div>
 </ng-template>
