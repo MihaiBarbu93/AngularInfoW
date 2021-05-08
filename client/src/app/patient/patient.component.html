@@ -19,7 +19,7 @@
     />
     <div *ngIf="f.firstName.touched && f.firstName.invalid" class="text-danger">
       <div class="pt-2" *ngIf="f.firstName.errors.required">
-        <p class="error">First name is require</p>
+        <p class="error">First name is required</p>
       </div>
     </div>
   </div>
@@ -78,11 +78,11 @@
       name="ssn"
       formControlName="ssn"
       [(ngModel)]="newPatient.ssn"
-      placeholder="ssn"
+      placeholder="SSN - must contain 13 numeric characters"
     />
     <div *ngIf="f.ssn.touched && f.ssn.invalid" class="text-danger">
       <div class="pt-2" *ngIf="f.ssn.errors.minlength || f.ssn.errors.maxlength || f.ssn.errors.pattern">
-        <p class="error">ssn must contain 13 numeric characters</p>
+        <p class="error">SSN must contain 13 numeric characters</p>
       </div>
     </div>
   </div>
